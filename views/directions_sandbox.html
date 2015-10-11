@@ -198,6 +198,7 @@ var onClickHandler = function() {
   calculateAndDisplayRoute(directionsService, directionsDisplay);
 }
 
+var dirArray = [];
 function calculateAndDisplayRoute(directionsService, directionsDisplay) {
   if (directionsService === undefined) {
     console.log("DS undef");
@@ -205,21 +206,29 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
   if (directionsDisplay === undefined) {
     console.log("DD undef");
   }
+  var start = document.getElementById('ilocal').value;
+  var end = document.getElementById('flocal').value;
+  if (!start || !end) {
+    return;
+  }
   var dReq = {
-    origin: document.getElementById('ilocal').value,
-    destination: document.getElementById('flocal').value,
+    origin: start,
+    destination: end,
     provideRouteAlternatives: true,
     travelMode: google.maps.TravelMode.WALKING
   };
+  for (var k = 0, klen = dirArray.length; k < klen; k++) {
+    dirArray.pop().setMap(null);
+  }
+  directionsDisplay.setMap(null);
   directionsService.route(dReq, function(response, status) {
     if (status === google.maps.DirectionsStatus.OK) {
       for (var i = 0, len = response.routes.length; i < len; i++) {
-                new google.maps.DirectionsRenderer({
+                dirArray.push(new google.maps.DirectionsRenderer({
                     map: map,
                     directions: response,
-                    suppressInfoWindows: false,
                     routeIndex: i
-                });
+                }));
             }
     } else {
       window.alert('Directions request failed due to ' + status);
