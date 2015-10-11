@@ -93,7 +93,7 @@
 </form>
         <li><div id="floating-panel">
         <b>Start: </b>
-        <select id="start" onchange="calculateAndDisplayRoute();">
+        <select id="start" onchange="onChangeHandler();">
           <option value="chicago, il">Chicago</option>
           <option value="st louis, mo">St Louis</option>
           <option value="joplin, mo">Joplin, MO</option>
@@ -109,7 +109,7 @@
           <option value="downtown berkeley BART station, shattuck ave, berkeley, ca">BART</option>
         </select>
         <b>End: </b>
-        <select id="end" onchange="calculateAndDisplayRoute();">
+        <select id="end" onchange="onChangeHandler();">
           <option value="Residence Halls Unit 2, Berkeley, CA">Unit 2</option>
           <option value="chicago, il">Chicago</option>
           <option value="st louis, mo">St Louis</option>
@@ -163,12 +163,15 @@ function initMap(){
     map: map,
     panel: document.getElementById('right-panel')
   });
-
+  console.log("initialize");
+  if (directionsService === undefined) {
+    console.log("DS undef");
+  }
+  if (directionsDisplay === undefined) {
+    console.log("DD undef");
+  }
     directionsDisplay.setMap(map);
-
-  var onChangeHandler = function() {
-    calculateAndDisplayRoute(directionsService, directionsDisplay);
-  };
+  
   document.getElementById('start').addEventListener('change', onChangeHandler);
   document.getElementById('end').addEventListener('change', onChangeHandler);
 
@@ -187,15 +190,32 @@ function initMap(){
 });
 }
 
+var onChangeHandler = function() {
+    calculateAndDisplayRoute(directionsService, directionsDisplay);
+};
+
 function calculateAndDisplayRoute(directionsService, directionsDisplay) {
-  directionsService.route({
+  if (directionsService === undefined) {
+    console.log("DS undef");
+  }
+  if (directionsDisplay === undefined) {
+    console.log("DD undef");
+  }
+  var dReq = {
     origin: document.getElementById('start').value,
     destination: document.getElementById('end').value,
     provideRouteAlternatives: true,
     travelMode: google.maps.TravelMode.WALKING
-  }, function(response, status) {
+  };
+  directionsService.route(dReq, function(response, status) {
     if (status === google.maps.DirectionsStatus.OK) {
-      directionsDisplay.setDirections(response);
+      for (var i = 0, len = response.routes.length; i < len; i++) {
+                new google.maps.DirectionsRenderer({
+                    map: map,
+                    directions: response,
+                    routeIndex: i
+                });
+            }
     } else {
       window.alert('Directions request failed due to ' + status);
     }
