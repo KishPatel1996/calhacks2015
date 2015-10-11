@@ -70,67 +70,22 @@
     </style>
   </head>
   <body>
-  <!-- <form id =>
-    Start:<br>
-    <input type="text" name="start">
-    <br>
-    End:<br>
-    <input type="text" name="end">
-    <br>
-    <input type="submit" value="Get directions">
-    <br>
-    <form action="action_page.php" method="get">
-  </form> -->
       <nav id="nav" class="active">
         <ul id="fixednav" style="list-style-type:none">
         <li><div id="header" style="display: inline;">
           <h1><span>Yellow Brick Rd</span></h1>
         </div></li>
         <li> <form id="User">
-  Initial Location: <input type="text" id="ilocal" onkeydown="if (event.keyCode == 13) onClickHandler();">
-  Final Destination: <input type="text" id="flocal" onkeydown="if (event.keyCode == 13) onClickHandler();">
-  <input id = "User-butt" type="button" value="Submit" onclick="onClickHandler();" >
-</form>
-        <!-- <li><div id="floating-panel">
-        <b>Start: </b>
-        <select id="start" onchange="onChangeHandler();">
-          <option value="chicago, il">Chicago</option>
-          <option value="st louis, mo">St Louis</option>
-          <option value="joplin, mo">Joplin, MO</option>
-          <option value="oklahoma city, ok">Oklahoma City</option>
-          <option value="amarillo, tx">Amarillo</option>
-          <option value="gallup, nm">Gallup, NM</option>
-          <option value="flagstaff, az">Flagstaff, AZ</option>
-          <option value="winona, az">Winona</option>
-          <option value="kingman, az">Kingman</option>
-          <option value="barstow, ca">Barstow</option>
-          <option value="san bernardino, ca">San Bernardino</option>
-          <option value="los angeles, ca">Los Angeles</option>
-          <option value="downtown berkeley BART station, shattuck ave, berkeley, ca">BART</option>
-        </select>
-        <b>End: </b>
-        <select id="end" onchange="onChangeHandler();">
-          <option value="Residence Halls Unit 2, Berkeley, CA">Unit 2</option>
-          <option value="chicago, il">Chicago</option>
-          <option value="st louis, mo">St Louis</option>
-          <option value="joplin, mo">Joplin, MO</option>
-          <option value="oklahoma city, ok">Oklahoma City</option>
-          <option value="amarillo, tx">Amarillo</option>
-          <option value="gallup, nm">Gallup, NM</option>
-          <option value="flagstaff, az">Flagstaff, AZ</option>
-          <option value="winona, az">Winona</option>
-          <option value="kingman, az">Kingman</option>
-          <option value="barstow, ca">Barstow</option>
-          <option value="san bernardino, ca">San Bernardino</option>
-          <option value="los angeles, ca">Los Angeles</option>
-        </select>
-        </div></li> -->
+              Initial Location: <input type="text" id="ilocal" onkeydown="if (event.keyCode == 13) onClickHandler();">
+              Final Destination: <input type="text" id="flocal" onkeydown="if (event.keyCode == 13) onClickHandler();">
+              <input id = "User-butt" type="button" value="Submit" onclick="onClickHandler();" >
+              </form>
         </ul>
       </nav>
 
 
-      <!-- <div id='satherimage' style="position: relative; left: 0; top: 0;">
-        <img src="./sather_gate_night.png" />
+      <!-- <div id='header' style="position: relative; left: 0; top: 0;">
+        <img src="./yellow-brick-road_tiled.png" />
       </div> -->
 
 
@@ -172,27 +127,13 @@ function initMap(){
   }
     directionsDisplay.setMap(map);
   
-  //document.getElementById('start').addEventListener('change', onChangeHandler);
-  //document.getElementById('end').addEventListener('change', onChangeHandler);
-
-  // var request = new XMLHttpRequest();
-  // request.open("GET", "demodata.json", false);
-  // request.send(null);
-  // obj = request.responsetext;
-  // console.log(obj[0]);
-  // something();
 
   $.getJSON('demodata.json', function(data) {
     //data is the JSON string
-    // console.log(data[0]);
     obj = data;
     generateHeatOverlay();
 });
 }
-
-// var onChangeHandler = function() {
-//     calculateAndDisplayRoute(directionsService, directionsDisplay);
-// };
 
 var onClickHandler = function() {
   calculateAndDisplayRoute(directionsService, directionsDisplay);
@@ -285,15 +226,11 @@ function generateHeatOverlay() {
             console.log('success');
             points = [];
             obj = obj['data']
-            // console.log(obj.length)
             for(var i = 0; i < obj.length; i++){
                 var lat = obj[i][15][1];
                 var lng = obj[i][15][2];
                 var crime = obj[i][12];
-                // console.log(lat);
-                // console.log(lng);
                 if(lat != null && lng != null) {
-                  //var latlng = new google.maps.LatLng(lat, lng);
                   var latlng = {location: new google.maps.LatLng(lat, lng),
                                 weight: identifyIntensity(crime)};
                   points.push(latlng);
