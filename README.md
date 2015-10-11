@@ -3,7 +3,7 @@
 
 A web app to educate users around Berkeley of potential dangerous areas and avoid them!
 
-![My image](yellow-brick-rd.jpg)
+![My image](yellow-brick-rd.png)
 
 
 
