@@ -3,7 +3,9 @@
 
 A web app to educate users around Berkeley of potential dangerous areas and avoid them!
 
-![Screenshot](yellow-brick-rd.tiff?raw=true )
+![My image](https://raw.githubusercontent.com/kishpatel1996/calhacks2015/master/yellow-brick-rd.jpg)
+
+
 
 Made with :heart: by AC Dela Paz, Dan Ricciardelli, Kishan Patel, and Sahil Lamba
 
