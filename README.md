@@ -3,7 +3,7 @@
 
 A web app to educate users around Berkeley of potential dangerous areas and avoid them!
 
-![My image](https://raw.githubusercontent.com/kishpatel1996/calhacks2015/master/yellow-brick-rd.jpg)
+![My image](yellow-brick-rd.jpg)
 
 
 
