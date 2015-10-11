@@ -173,7 +173,7 @@ function initMap(){
     //data is the JSON string
     // console.log(data[0]);
     obj = data;
-    something();
+    generateHeatOverlay();
 });
 }
 
@@ -207,7 +207,7 @@ $("#User-butt").click(function() {
 
 
 
-var something = function() {
+function generateHeatOverlay() {
 
             console.log('success');
             points = [];
@@ -219,14 +219,18 @@ var something = function() {
                 // console.log(lat);
                 // console.log(lng);
                 if(lat != null && lng != null) {
-                  var latlng = new google.maps.LatLng(lat, lng);
+                  //var latlng = new google.maps.LatLng(lat, lng);
+                  var latlng = {location: new google.maps.LatLng(lat, lng),
+                                weight: 1};
                   points.push(latlng);
+
                 }
             }
             var heatmap = new google.maps.visualization.HeatmapLayer({
-              data: points
+              data: points,
+              map: map
             });
-            heatmap.setMap(map);
+            heatmap.set('radius', 45);
 
   }
 
