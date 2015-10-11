@@ -87,11 +87,11 @@
           <h1><span>Yellow Brick Rd</span></h1>
         </div></li>
         <li> <form id="User">
-  Initial Location: <input type="text" id="ilocal">
-  Final Destination: <input type="text" id="flocal">
-  <input id = "User-butt" type="button" value="Submit">
+  Initial Location: <input type="text" id="ilocal" onkeydown="if (event.keyCode == 13) onClickHandler();">
+  Final Destination: <input type="text" id="flocal" onkeydown="if (event.keyCode == 13) onClickHandler();">
+  <input id = "User-butt" type="button" value="Submit" onclick="onClickHandler();" >
 </form>
-        <li><div id="floating-panel">
+        <!-- <li><div id="floating-panel">
         <b>Start: </b>
         <select id="start" onchange="onChangeHandler();">
           <option value="chicago, il">Chicago</option>
@@ -124,7 +124,7 @@
           <option value="san bernardino, ca">San Bernardino</option>
           <option value="los angeles, ca">Los Angeles</option>
         </select>
-        </div></li>
+        </div></li> -->
         </ul>
       </nav>
 
@@ -172,8 +172,8 @@ function initMap(){
   }
     directionsDisplay.setMap(map);
   
-  document.getElementById('start').addEventListener('change', onChangeHandler);
-  document.getElementById('end').addEventListener('change', onChangeHandler);
+  //document.getElementById('start').addEventListener('change', onChangeHandler);
+  //document.getElementById('end').addEventListener('change', onChangeHandler);
 
   // var request = new XMLHttpRequest();
   // request.open("GET", "demodata.json", false);
@@ -190,9 +190,13 @@ function initMap(){
 });
 }
 
-var onChangeHandler = function() {
-    calculateAndDisplayRoute(directionsService, directionsDisplay);
-};
+// var onChangeHandler = function() {
+//     calculateAndDisplayRoute(directionsService, directionsDisplay);
+// };
+
+var onClickHandler = function() {
+  calculateAndDisplayRoute(directionsService, directionsDisplay);
+}
 
 function calculateAndDisplayRoute(directionsService, directionsDisplay) {
   if (directionsService === undefined) {
@@ -202,8 +206,8 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
     console.log("DD undef");
   }
   var dReq = {
-    origin: document.getElementById('start').value,
-    destination: document.getElementById('end').value,
+    origin: document.getElementById('ilocal').value,
+    destination: document.getElementById('flocal').value,
     provideRouteAlternatives: true,
     travelMode: google.maps.TravelMode.WALKING
   };
@@ -213,6 +217,7 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
                 new google.maps.DirectionsRenderer({
                     map: map,
                     directions: response,
+                    suppressInfoWindows: false,
                     routeIndex: i
                 });
             }
