@@ -83,19 +83,10 @@
         </ul>
       </nav>
 
-
-      <!-- <div id='header' style="position: relative; left: 0; top: 0;">
-        <img src="./yellow-brick-road_tiled.png" />
-      </div> -->
-
-
       <div id="map" class="section"></div>
 
-
-
-
       <div id="footer" class="section">
-        <p>Created by Kishan Patel, Sahil Lamba, AC Dela Paz, and Dan Ricciardelli</p>
+        <p>Created by Kishan Patel, Sahil Lamba, Anthony Dela Paz, and Dan Ricciardelli</p>
         <p>CalHacks 2015</p>
       </div>
 
@@ -165,9 +156,19 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
   directionsService.route(dReq, function(response, status) {
     if (status === google.maps.DirectionsStatus.OK) {
       for (var i = 0, len = response.routes.length; i < len; i++) {
+                if (i == 0) {
+                  color = "#FFCC00";
+                  opacity = 0.95;
+                  strkwt = 8;
+                } else {
+                  color = "#3399FF";
+                  opacity = 0.45;
+                  strkwt = 4;
+                }
                 dirArray.push(new google.maps.DirectionsRenderer({
                     map: map,
                     directions: response,
+                    polylineOptions: {map: map, strokeColor: color, strokeOpacity: opacity, strokeWeight: strkwt, visible: true},
                     routeIndex: i
                 }));
             }
