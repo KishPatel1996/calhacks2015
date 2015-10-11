@@ -86,6 +86,11 @@
         <li><div id="header" style="display: inline;">
           <h1><span>Yellow Brick Rd</span></h1>
         </div></li>
+        <li> <form id="User">
+  Initial Location: <input type="text" id="ilocal">
+  Final Destination: <input type="text" id="flocal">
+  <input id = "User-butt" type="button" value="Submit">
+</form>
         <li><div id="floating-panel">
         <b>Start: </b>
         <select id="start" onchange="calculateAndDisplayRoute();">
@@ -198,6 +203,17 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
   directionsDisplay.setMap(map);
 }
 
+$("#User-butt").click(function() {
+  var ilocal = $("#ilocal").val().trim();
+  var flocal = $("#flocal").val().trim();
+  console.log(ilocal);
+  console.log(flocal);
+  if (!ilocal || !flocal) {
+    console.log("Something blank");
+    return;
+  }
+  //API STUFF
+});
 
 
 
