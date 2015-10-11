@@ -186,7 +186,7 @@ function initMap(){
     //data is the JSON string
     // console.log(data[0]);
     obj = data;
-    something();
+    generateHeatOverlay();
 });
 }
 
@@ -236,8 +236,37 @@ $("#User-butt").click(function() {
 });
 
 
+function identifyIntensity(crime) {
+  if (crime == "HOMICIDE") {
+    console.log(10);
+    return 25;
+  } else if (crime == "KIDNAPPING" || crime == "SEX CRIME") {
+    console.log(9);
+    return 15;
+  } else if (crime == "LARCENY" || crime =="LARCENY - FROM VEHICLE") {
+    console.log(8);
+    return 7;
+  } else if (crime == "ASSAULT" ) {
+    console.log(6);
+    return 6;
+  } else if (crime == "ROBBERY") {
+    console.log(5);
+    return 5;
+  } else if (crime == "ARSON" || crime == "MISSING PERSON") {
+    console.log(4);
+    return 4;
+  } else if (crime == "DRUG VIOLATION" || crime == "BURGLARY - COMMERCIAL" || crime == "BURGLARY - RESIDENTIAL") {
+    console.log(3);
+    return 3;
+  } else if (crime == "BURGLARY - VEHICLE") {
+    console.log(2);
+    return 2;
+  } else {
+    return 1;
+  }
+}
 
-var something = function() {
+function generateHeatOverlay() {
 
             console.log('success');
             points = [];
@@ -246,17 +275,23 @@ var something = function() {
             for(var i = 0; i < obj.length; i++){
                 var lat = obj[i][15][1];
                 var lng = obj[i][15][2];
+                var crime = obj[i][12];
                 // console.log(lat);
                 // console.log(lng);
                 if(lat != null && lng != null) {
-                  var latlng = new google.maps.LatLng(lat, lng);
+                  //var latlng = new google.maps.LatLng(lat, lng);
+                  var latlng = {location: new google.maps.LatLng(lat, lng),
+                                weight: identifyIntensity(crime)};
                   points.push(latlng);
+
                 }
             }
             var heatmap = new google.maps.visualization.HeatmapLayer({
-              data: points
+              data: points,
+              map: map,
+              maxIntensity: 400,
+              radius: 30
             });
-            heatmap.setMap(map);
 
   }
 
